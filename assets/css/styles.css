@@ -1,0 +1,379 @@
+:root{
+            --bg:#fbfbfb;
+            --card:#ffffff;
+            --text:#222;
+            --muted:#6b7280;
+            --accent:#68b684;
+            --glass: rgba(255,255,255,0.6);
+            --radius:12px;
+            --max:100%; /* увеличил ширину */
+            --gap:20px;
+            font-size:16px;
+            font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+        }
+
+        body{
+            margin:0;
+            background:linear-gradient(180deg, #ffffff 0%, #fbfefb 100%);
+            color:var(--text);
+            -webkit-font-smoothing:antialiased;
+            -moz-osx-font-smoothing:grayscale;
+            padding:40px 20px;
+            display:block; /* убрал flex, чтобы страница скроллилась нормально */
+        }
+
+        .wrap{
+            width:100%;
+            max-width:var(--max);
+            background:var(--bg);
+            border-radius:16px;
+            box-shadow:0 8px 30px rgba(20,20,30,0.06);
+            overflow:hidden; 
+            display:flex;
+            flex-direction:column;
+            margin:0 auto; /* центрируем контейнер, но с большей шириной он не будет казаться слишком узким */
+        }
+
+        header{
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            padding:18px 28px;
+            gap:20px;
+            background:linear-gradient(90deg, rgba(255,255,255,0.6), rgba(255,255,255,0.4));
+            backdrop-filter: blur(4px);
+        }
+
+        .brand{
+            display:flex;
+            align-items:center;
+            gap:12px;
+            text-decoration:none;
+            color:var(--text);
+        }
+        .logo{
+            width:44px;
+            height:44px;
+            border-radius:10px;
+            background:linear-gradient(135deg,var(--accent), #53a66a);
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            color:#fff;
+            font-weight:700;
+            font-size:18px;
+            box-shadow:0 6px 18px rgba(80,135,96,0.18);
+        }
+        .brand-name{
+            font-weight:700;
+            letter-spacing:0.2px;
+        }
+        /* Вынесенный субзаголовок в шапке */
+        .brand-sub{ font-size:12px; color:var(--muted); }
+
+        nav ul{
+            margin:0;
+            padding:0;
+            list-style:none;
+            display:flex;
+            gap:14px;
+            align-items:center;
+        }
+        nav a{
+            text-decoration:none;
+            color:var(--muted);
+            padding:8px 12px;
+            border-radius:8px;
+            font-weight:600;
+            transition:all .18s ease;
+            font-size:15px;
+            background-color: #b7e6c445;
+        }
+        nav a:hover{ color:var(--text); background:rgba(0,0,0,0.03) }
+
+        main{
+            padding:28px;
+            display:flex;
+            flex-direction:column;
+            gap:22px;
+        }
+
+        .hero{
+            display:grid;
+            grid-template-columns:1fr 360px; /* чуть шире правая колонка */
+            gap:20px;
+            align-items:center;
+        }
+
+        .hero-card{
+            background:var(--card);
+            border-radius:var(--radius);
+            padding:22px;
+            box-shadow:0 8px 30px rgba(20,20,30,0.04);
+        }
+
+        .hero h1{
+            margin:0 0 10px 0;
+            font-size:28px;
+            line-height:1.05;
+        }
+        .hero p{ margin:0 0 18px 0; color:var(--muted) }
+        /* Короткая заметка в hero — чуть меньший отступ */
+        .hero-note{ margin:0 0 12px 0; color:var(--muted) }
+
+        .cta{
+            display:inline-block;
+            background:var(--accent);
+            color:#fff;
+            padding:10px 14px;
+            border-radius:10px;
+            text-decoration:none;
+            font-weight:700;
+            box-shadow:0 8px 18px rgba(104,183,132,0.18);
+        }
+
+        .featured-img{
+            width:100%;
+            height:220px;
+            border-radius:12px;
+            object-fit:cover;
+            display:block;
+        }
+        /* Правила для правой колонки hero */
+        .hero-images{ display:flex; flex-direction:column; gap:14px }
+        .hero-thumb-row{ display:flex; gap:12px }
+        .featured-main{ height:100px; border-radius:20px; }
+        .thumb-img{ height:100px; flex:1; border-radius:20px; }
+
+        /* Ограничиваем ширину карточек, чтобы они не разрастались на широких экранах */
+        .grid{
+            display: grid;
+            grid-template-columns: repeat(4, 320px);
+            justify-content: center;
+            gap: 18px;
+            margin: 0 auto;
+            max-width: 1400px; /* calc(320px * 4 + 18px * 3); */
+        }
+
+        .card{
+            background:var(--card);
+            border-radius:12px;
+            overflow:hidden;
+            box-shadow:0 6px 20px rgba(20,20,30,0.04);
+            transition:transform .18s ease, box-shadow .18s ease;
+            display:flex;
+            flex-direction:column;
+            width:100%;
+        }
+        .card:hover{
+            transform:translateY(-6px);
+            box-shadow:0 18px 40px rgba(20,20,30,0.08);
+        }
+
+        .card img{
+            width:100%;
+            height:170px;
+            object-fit:cover;
+            display:block;
+        }
+
+        .card-body{
+            padding:14px;
+            display:flex;
+            flex-direction:column;
+            gap:10px;
+        }
+        .card-title{ font-weight:700; margin:0; font-size:15px }
+        .card-desc{ margin:0; color:var(--muted); font-size:14px; line-height:1.3 }
+        .card-meta{ margin-top:auto; display:flex; justify-content:space-between; align-items:center; gap:8px}
+        .chip{ background:rgba(100,120,110,0.06); color:var(--muted); padding:6px 8px; border-radius:8px; font-weight:600; font-size:13px }
+        /* Ссылка "Смотреть" в карточках */
+        .card-link{ text-decoration:none; color:var(--accent); font-weight:700; font-size:14px; background-color: #b7e6c445; padding: 5px; border-radius: 5%;}
+
+        .subscribe{
+            background:linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0.4));
+            border-radius:12px;
+            padding:16px;
+            display:flex;
+            gap:12px;
+            align-items:center;
+            justify-content:space-between;
+            box-shadow:0 6px 18px rgba(20,20,30,0.03);
+        }
+        .subscribe form{ display:flex; gap:8px; align-items:center; width:100% }
+        .subscribe input[type="email"]{
+            flex:1;
+            padding:10px 12px;
+            border-radius:10px;
+            border:1px solid rgba(0,0,0,0.06);
+            font-size:14px;
+        }
+        .subscribe button{
+            background:var(--accent);
+            color:#fff;
+            padding:10px 14px;
+            border-radius:10px;
+            border:0;
+            font-weight:700;
+            cursor:pointer;
+        }
+
+        footer{
+            padding:18px 28px;
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            gap:12px;
+            color:var(--muted);
+            font-size:14px;
+            border-top:1px solid rgba(0,0,0,0.04);
+        }
+        .footer-links{ display:flex; gap:12px; align-items:center }
+        .footer-link{ color:var(--muted); text-decoration:none }
+
+        /* -------------------------------------------------------------------
+   Фон за карточками и визуальное разделение шапки/подвала
+   ------------------------------------------------------------------- */
+
+        /* Оборачиваем секцию с карточками в мягкий фон */
+        main > section:nth-of-type(2) {
+            background: linear-gradient(180deg, rgba(104,183,132,0.03), rgba(255,255,255,0.9));
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 6px 18px rgba(33, 33, 92, 0.03);
+        }
+
+        /* Немного сдвинуть сетку внутрь и ограничить ширину внутри блока */
+        .grid{
+            max-width: calc(320px * 4 + 18px * 3);
+            padding: 8px;
+            justify-content: center;
+            margin: 0 auto;
+            background: transparent;
+        }
+
+        /* Визуально отделить шапку и подвал светлым фоном */
+        header, footer{
+            background: linear-gradient(90deg, rgba(255,255,255,0.92), rgba(250,250,250,0.9));
+            border-radius: 10px;
+            box-shadow: 0 6px 18px rgba(20,20,30,0.03);
+        }
+
+        /* Немного увеличить отступы вокруг header/footer при большом экране,
+           чтобы было явно видно разделение */
+        @media (min-width:981px){
+            header{ margin: 14px 22px; padding:18px 28px; }
+            footer{ margin: 14px 22px; padding:18px 28px; }
+        }
+
+        /* Мобильные правки: убрать внешние margin чтобы не ломать layout */
+        @media (max-width:640px){
+            header, footer{ margin:0; border-radius:8px; }
+            main > section:nth-of-type(2){ padding:14px; border-radius:8px; }
+        }
+
+        /* Стили для страницы рецептов (recipe-page / recipe-card) */
+.recipe-page h1{ font-size:22px; margin-bottom:8px; }
+
+.recipe-card{
+    background:var(--card);
+    border-radius:12px;
+    padding:18px;
+    box-shadow:0 8px 30px rgba(20,20,30,0.04);
+    margin-bottom:18px;
+}
+
+/* Переконфигурация сетки: используем один поток контента и плавающее изображение,
+   чтобы текст обтекал картинку и не оставлял пустого пространства под ней */
+.recipe-grid{
+    display:block; /* перестроить на потоковый контейнер */
+    gap:18px;
+}
+
+/* Плавающая картинка внутри .info-col */
+.recipe-thumb{
+    float:left;
+    width:260px;
+    height:auto;
+    margin:0 22px 18px 0;
+    border-radius:10px;
+    object-fit:cover;
+    box-shadow:0 6px 18px rgba(20,20,30,0.04);
+}
+
+/* Сброс обтекания в .info-col */
+.info-col::after{
+    content:"";
+    display:table;
+    clear:both;
+}
+
+/* На узких экранах делаем изображение блоком (стандартная стопка) */
+@media (max-width:980px){
+    .recipe-thumb{
+        float:none;
+        width:100%;
+        margin:0 0 12px 0;
+    }
+}
+
+.media-col img{
+    width:100%;
+    height:260px;
+    object-fit:cover;
+    border-radius:10px;
+    display:block;
+    margin-bottom:12px;
+}
+
+/* Левая колонка контента */
+.info-col h2{ margin:0 0 6px 0; font-size:20px; }
+.info-col .muted{ color:var(--muted); margin:0 0 12px 0; }
+
+/* Ингредиенты и шаги */
+.ingredients, .steps{
+    background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(250,250,250,0.9));
+    padding:12px;
+    border-radius:10px;
+    margin-bottom:12px;
+}
+.ingredients h3, .steps h3, .wishes h3, .comments h3{ margin:0 0 8px 0; font-size:16px; }
+
+/* Пожелания */
+.wish-form{ display:flex; gap:8px; margin-bottom:8px; }
+.wish-form input{ flex:1; padding:8px 10px; border-radius:8px; border:1px solid rgba(0,0,0,0.06); }
+.wish-form button{ padding:8px 12px; border-radius:8px; background:var(--accent); color:#fff; border:0; }
+
+/* Комментарии */
+.comment-list, .wish-list{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:8px; }
+.comment-list li, .wish-list li{ background:rgba(0,0,0,0.02); padding:8px 10px; border-radius:8px; font-size:14px; }
+
+.comment-form{ display:flex; flex-direction:column; gap:8px; margin-top:10px; }
+.comment-form input, .comment-form textarea{
+    padding:10px; border-radius:8px; border:1px solid rgba(0,0,0,0.06); font-size:14px;
+}
+.comment-form textarea{ min-height:80px; resize:vertical; }
+.comment-form button{ align-self:flex-end; padding:8px 12px; border-radius:8px; background:var(--accent); color:#fff; border:0; }
+
+/* Небольшие визуальные правки для согласованности */
+.recipe-card .muted{ color:var(--muted); }
+.recipe-card h2{ margin-bottom:6px; }
+/* Скрытые рецепты (по умолчанию) */
+.recipe-hidden{ display:none; }
+
+/* Стили кнопки "Еще" (вариация .cta) */
+#load-more{
+    cursor:pointer;
+    font-weight:700;
+    padding:10px 18px;
+    border-radius:10px;
+    border:0;
+    background:var(--accent);
+    color:#fff;
+    box-shadow:0 8px 18px rgba(104,183,132,0.18);
+}
+
+/* Немного отступа для появляющихся карточек */
+.recipe-card{ transition:opacity .22s ease, transform .22s ease; }
+.recipe-card:not(.recipe-hidden){ opacity:1; transform:translateY(0); }
+.recipe-card.recipe-hidden{ opacity:0; transform:translateY(6px); }
