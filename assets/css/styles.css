@@ -87,9 +87,16 @@
             font-weight:600;
             transition:all .18s ease;
             font-size:15px;
-            background-color: #b7e6c445;
+            background-color: #98d3a845;
         }
         nav a:hover{ color:var(--text); background:rgba(0,0,0,0.03) }
+
+        .admin-panel a{
+            font-weight:700;
+            background:#0b5572;
+            color:#fff;
+            box-shadow:0 6px 18px rgba(104,183,132,0.18);
+        }
 
         main{
             padding:28px;
@@ -175,6 +182,7 @@
             height:170px;
             object-fit:cover;
             display:block;
+            aspect-ratio: 4/3;
         }
 
         .card-body{
@@ -377,3 +385,143 @@
 .recipe-card{ transition:opacity .22s ease, transform .22s ease; }
 .recipe-card:not(.recipe-hidden){ opacity:1; transform:translateY(0); }
 .recipe-card.recipe-hidden{ opacity:0; transform:translateY(6px); }
+
+
+/* ===============================
+   ADMIN PANEL (ВКУСНО)
+   =============================== */
+
+/* Контейнер */
+.admin-container {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: var(--font, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif);
+}
+
+/* Заголовок */
+.admin-title {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 18px;
+    letter-spacing: -0.5px;
+}
+
+/* Блоки-карточки */
+.admin-card {
+    background: #fff;
+    border-radius: 14px;
+    padding: 22px;
+    margin-bottom: 22px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+    border: 1px solid #ececec;
+}
+
+.admin-card h3 {
+    margin-top: 0;
+}
+
+/* Вводы */
+.admin-form input,
+.admin-form textarea {
+    width: 100%;
+    padding: 12px 14px;
+    border-radius: 10px;
+    background: #fafafa;
+    border: 1px solid #ddd;
+    margin-bottom: 14px;
+    font-size: 15px;
+    transition: 0.2s;
+}
+
+.admin-form input:focus,
+.admin-form textarea:focus {
+    border-color: var(--accent, #ff7043);
+    background: #fff;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(255,112,67,0.2);
+}
+
+/* Подписи */
+.admin-form label {
+    font-size: 14px;
+    color: var(--muted, #666);
+    margin-bottom: 4px;
+    display: inline-block;
+}
+
+/* Кнопки */
+.admin-btn {
+    background: var(--accent, #ff7043);
+    border: none;
+    padding: 12px 18px;
+    border-radius: 10px;
+    color: #fff;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.25s;
+}
+
+.admin-btn:hover {
+    background: #ff5722;
+}
+
+.admin-btn-secondary {
+    background: #e0e0e0;
+    color: #333;
+}
+
+.admin-btn-secondary:hover {
+    background: #d5d5d5;
+}
+
+/* Авторизация */
+.admin-auth {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+#user-info {
+    background: #fff;
+    border-radius: 12px;
+    padding: 15px;
+    border: 1px solid #eee;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+    margin-bottom: 20px;
+}
+
+/* Список рецептов */
+.admin-list-item {
+    border: 1px solid #eee;
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 12px;
+    background: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.admin-list-item strong {
+    font-size: 16px;
+}
+
+.admin-actions button {
+    margin-left: 8px;
+}
+
+/* Группировка действий */
+.admin-actions button {
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+/* Layout spacing */
+.admin-section-title {
+    font-size: 26px;
+    margin-bottom: 10px;
+    margin-top: 30px;
+}

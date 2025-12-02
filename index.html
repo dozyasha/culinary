@@ -23,6 +23,7 @@
                     <li><a href="recept.html">Рецепты</a></li>
                     <li><a href="#">О нас</a></li>
                     <li><a href="#">Контакты</a></li>
+                    <li class="admin-panel"><a href="admin.html">Войти</a></li>
                 </ul>
             </nav>
         </header>
@@ -33,7 +34,7 @@
                     <h1>Простые и вкусные рецепты на каждый день</h1>
                     <p>Минималистичная коллекция проверенных рецептов: завтраки, супы, основные блюда и десерты. Фотографии подбираются под тему для вдохновения.</p>
                     <p class="hero-note">Новые рецепты добавляются каждую неделю — подписывайтесь, чтобы не пропустить.</p>
-                    <a class="cta" href="#">Открыть коллекцию</a>
+                    <a class="cta" href="#popular-recept">Открыть коллекцию</a>
                 </div>
 
                 <div class="hero-images">
@@ -45,7 +46,7 @@
                 </div>
             </section>
 
-            <section>
+            <section id="popular-recept">
                 <h2 class="section-title">Популярные рецепты</h2>
 
                 <div class="grid" role="list">
@@ -197,5 +198,21 @@ document.addEventListener('DOMContentLoaded', async () => {
     grid.appendChild(card);
   });
 });
+
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function (e) {
+    e.preventDefault(); // Предотвращаем стандартное поведение ссылки
+
+    const targetId = this.getAttribute('href');
+    const targetElement = document.querySelector(targetId);
+
+    if (targetElement) {
+      targetElement.scrollIntoView({
+        behavior: 'smooth' // Включаем плавную прокрутку
+      });
+    }
+  });
+});
+
 </script>
 </html>
