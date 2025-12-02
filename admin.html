@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <title>Admin — Рецепты</title>
+  <link rel="stylesheet" href="assets/css/styles.css" />
+</head>
+<body>
+<div class="wrap" style="max-width:900px;margin:20px auto;">
+  <h1>Админ-панель рецептов</h1>
+
+  <!-- LOGIN -->
+  <div id="auth-block">
+    <h3>Вход</h3>
+    <form id="login-form">
+      <input id="email" type="email" placeholder="Email" required>
+      <input id="password" type="password" placeholder="Пароль" required>
+      <button type="submit">Войти</button>
+    </form>
+    <div id="user-info" style="display:none;">
+      <span id="user-email"></span>
+      <button id="logout">Выйти</button>
+    </div>
+  </div>
+
+  <hr/>
+
+  <!-- FORM -->
+  <form id="recipe-form">
+    <h3>Создать / Редактировать рецепт</h3>
+
+    <input type="hidden" id="recipe-id">
+
+    <label>Название</label>
+    <input id="title" required>
+
+    <label>Описание</label>
+    <input id="description">
+
+    <label>Время (например: 30 мин)</label>
+    <input id="time">
+
+    <label>Ингредиенты (по одному в строке)</label>
+    <textarea id="ingredients" rows="4"></textarea>
+
+    <label>Шаги (по одному в строке)</label>
+    <textarea id="steps" rows="6"></textarea>
+
+    <label>Картинка</label>
+    <input id="image-file" type="file" accept="image/*">
+
+    <button type="submit">Сохранить рецепт</button>
+  </form>
+
+  <hr/>
+
+  <h2>Список рецептов</h2>
+  <div id="recipes-list"></div>
+</div>
+
+<script type="module">
+import { supabase } from './assets/js/supabase-init.js';
+
+/* ---------------- AUTH ---------------- */
+
+const loginForm = document.getElementById('login-form');
+const userInfo = document.getElementById('user-info');
+const userEmail = document.getElementById('user-email');
+
+loginForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const email = document.getElementById('email').value.trim();
+  const password = document.getElementById('password').value.trim();
+  const { error } = await supabase.auth.signInWithPassword({ email, password });
+  if(error) alert(error.message);
+});
+
+document.getElementById('logout').onclick = () => supabase.auth.signOut();
+
+supabase.auth.onAuthStateChange((event, session) => {
+  if(session){
+    loginForm.style.display = 'none';
+    userInfo.style.display = '';
+    userEmail.textContent = session.user.email;
+    loadRecipes();
+  } else {
+    loginForm.style.display = '';
+    userInfo.style.display = 'none';
+    userEmail.textContent = '';
+    document.getElementById('recipes-list').innerHTML = '';
+  }
+});
+
+/* ---------------- CRUD ---------------- */
+
+async function loadRecipes(){
+  const container = document.getElementById('recipes-list');
+  container.innerHTML = 'Загрузка...';
+
+  const { data, error } = await supabase
+    .from('recipes')
+    .select('*')
+    .order('created_at', { ascending: false });
+
+  if(error){
+    container.innerHTML = error.message;
+    return;
+  }
+
+  container.innerHTML = '';
+  data.forEach(rec => {
+    const div = document.createElement('div');
+    div.style.border = "1px solid #ddd";
+    div.style.marginBottom = "10px";
+    div.style.padding = "10px";
+    div.innerHTML = `
+      <strong>${rec.title}</strong> (${rec.time || ''})
+      <div>
+        <button data-id="${rec.id}" class="edit">Редактировать</button>
+        <button data-id="${rec.id}" class="delete">Удалить</button>
+      </div>
+    `;
+    container.appendChild(div);
+  });
+
+  container.querySelectorAll('.edit').forEach(btn => {
+    btn.onclick = () => editRecipe(btn.dataset.id);
+  });
+
+  container.querySelectorAll('.delete').forEach(btn => {
+    btn.onclick = () => deleteRecipe(btn.dataset.id);
+  });
+}
+
+async function editRecipe(id){
+  const { data } = await supabase
+    .from('recipes')
+    .select('*')
+    .eq('id', id)
+    .single();
+
+  document.getElementById('recipe-id').value = data.id;
+  document.getElementById('title').value = data.title;
+  document.getElementById('description').value = data.description || '';
+  document.getElementById('time').value = data.time || '';
+  document.getElementById('ingredients').value = (data.ingredients || []).join("\n");
+  document.getElementById('steps').value = (data.steps || []).join("\n");
+
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+async function deleteRecipe(id){
+  if(!confirm("Удалить рецепт?")) return;
+  await supabase.from('recipes').delete().eq('id', id);
+  loadRecipes();
+}
+
+document.getElementById('recipe-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+
+  const id = document.getElementById('recipe-id').value;
+  const title = document.getElementById('title').value.trim();
+  const description = document.getElementById('description').value.trim();
+  const time = document.getElementById('time').value.trim();
+  const ingredients = document.getElementById('ingredients').value.split("\n").map(s => s.trim()).filter(Boolean);
+  const steps = document.getElementById('steps').value.split("\n").map(s => s.trim()).filter(Boolean);
+  const file = document.getElementById('image-file').files[0];
+
+  let image_url = null;
+
+  if(file){
+    const filePath = `recipe_${Date.now()}_${file.name}`;
+    const { data: upload } = await supabase.storage
+      .from('images')
+      .upload(filePath, file);
+
+    image_url = supabase.storage.from('images').getPublicUrl(filePath).data.publicUrl;
+  }
+
+  const payload = { title, description, time, ingredients, steps };
+
+  if(image_url) payload.image_url = image_url;
+
+  if(id){
+    await supabase.from('recipes').update(payload).eq('id', id);
+  } else {
+    await supabase.from('recipes').insert(payload);
+  }
+
+  e.target.reset();
+  loadRecipes();
+});
+</script>
+
+</body>
+</html>

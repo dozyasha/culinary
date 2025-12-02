@@ -335,5 +335,45 @@ document.addEventListener('DOMContentLoaded', () => {
     */
 });
 </script>
+<script type="module">
+import { supabase } from './assets/js/supabase-init.js';
+
+async function loadRecipes(){
+  const container = document.getElementById('content');
+  container.innerHTML = '<h1>Все рецепты</h1>';
+
+  const { data } = await supabase
+    .from('recipes')
+    .select('*')
+    .order('created_at', { ascending: false });
+
+  data.forEach(r => {
+    const el = document.createElement('article');
+    el.className = "recipe-card";
+    el.innerHTML = `
+      <div class="recipe-grid">
+        <div class="info-col">
+          <img class="recipe-thumb" src="${r.image_url || 'assets/images/placeholder.png'}">
+          <h2>${r.title}</h2>
+          <p class="muted">${r.description || ''} ${r.time? '• ' + r.time : ''}</p>
+
+          <section class="ingredients">
+            <h3>Ингредиенты</h3>
+            <ul>${r.ingredients.map(i => `<li>${i}</li>`).join('')}</ul>
+          </section>
+
+          <section class="steps">
+            <h3>Шаги</h3>
+            <ol>${r.steps.map(s => `<li>${s}</li>`).join('')}</ol>
+          </section>
+        </div>
+      </div>
+    `;
+    container.appendChild(el);
+  });
+}
+
+document.addEventListener('DOMContentLoaded', loadRecipes);
+</script>
 </body>
 </html>

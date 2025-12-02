@@ -164,7 +164,38 @@
                 <a class="footer-link" href="#">Контакты</a>
                 <a class="footer-link" href="#">Оферта</a>
             </div>
-            </footer>
+        </footer>
+    </div>
+</body>
+<script type="module">
+import { supabase } from './assets/js/supabase-init.js';
+
+document.addEventListener('DOMContentLoaded', async () => {
+  const grid = document.querySelector('.grid');
+  if(!grid) return;
+
+  const { data } = await supabase
+    .from('recipes')
+    .select('*')
+    .order('created_at', { ascending: false })
+    .limit(6);
+
+  data.forEach(r => {
+    const card = document.createElement('article');
+    card.className = "card";
+    card.innerHTML = `
+      <img src="${r.image_url || 'assets/images/placeholder.png'}" loading="lazy" />
+      <div class="card-body">
+        <h3 class="card-title">${r.title}</h3>
+        <p class="card-desc">${r.description || ''}</p>
+        <div class="card-meta">
+          <span class="chip">${r.time || ''}</span>
+          <a class="card-link" href="recept.html">Смотреть</a>
         </div>
-    </body>
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+});
+</script>
 </html>
