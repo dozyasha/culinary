@@ -366,8 +366,6 @@
 /* Небольшие визуальные правки для согласованности */
 .recipe-card .muted{ color:var(--muted); }
 .recipe-card h2{ margin-bottom:6px; }
-/* Скрытые рецепты (по умолчанию) */
-.recipe-hidden{ display:none; }
 
 /* Стили кнопки "Еще" (вариация .cta) */
 #load-more{
@@ -417,6 +415,35 @@
     border: 1px solid #ececec;
 }
 
+.admin-card-auth {
+    height: 40vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+    border-radius: 14px;
+    padding: 22px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+    border: 1px solid #ececec;
+    width: 320px;
+    margin: 0 auto 22px auto;
+}
+
+#email, #password {
+    border: #333 1px solid;
+    border-radius: 12px;
+    padding: 12px 12px;
+    width: 90%;
+    margin-bottom: 14px;
+    font-size: 14px;
+    transition: 0.2s;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.admin-auth {
+    gap: 12px;
+}
+
 .admin-card h3 {
     margin-top: 0;
 }
@@ -424,8 +451,10 @@
 /* Вводы */
 .admin-form input,
 .admin-form textarea {
+    display: block;
     width: 100%;
-    padding: 12px 14px;
+    box-sizing: border-box;
+    padding: 12px;
     border-radius: 10px;
     background: #fafafa;
     border: 1px solid #ddd;
@@ -436,7 +465,7 @@
 
 .admin-form input:focus,
 .admin-form textarea:focus {
-    border-color: var(--accent, #ff7043);
+    border-color: var(--accent, #106b56);
     background: #fff;
     outline: none;
     box-shadow: 0 0 0 2px rgba(255,112,67,0.2);
@@ -452,7 +481,7 @@
 
 /* Кнопки */
 .admin-btn {
-    background: var(--accent, #ff7043);
+    background: var(--accent, #106b56);
     border: none;
     padding: 12px 18px;
     border-radius: 10px;
@@ -464,7 +493,7 @@
 }
 
 .admin-btn:hover {
-    background: #ff5722;
+    background: #106b56;
 }
 
 .admin-btn-secondary {
@@ -477,11 +506,6 @@
 }
 
 /* Авторизация */
-.admin-auth {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
 
 #user-info {
     background: #fff;
@@ -524,4 +548,43 @@
     font-size: 26px;
     margin-bottom: 10px;
     margin-top: 30px;
+}
+
+.recipes-list {
+    margin-top: 10px;
+}
+
+.edit,.delete {
+    display: flex;
+    background: var(--accent, #0a6d88);
+    border: none;
+    margin: 10px 5px 10px 0;
+    padding: 10px;
+    border-radius: 10px;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.25s;
+}
+
+.edit:hover,.delete:hover {
+    background: #106b56;
+}
+
+.recep-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.recep-title-name {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    flex: 1;
+}
+
+.image-upload {
+    margin: 5px 0 14px 0;
 }

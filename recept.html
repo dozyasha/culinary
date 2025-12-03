@@ -26,6 +26,7 @@
             </nav>
         </header>
 
+        
         <main class="recipe-page" id="content">
             <h1 style="margin:0 0 14px 0">Все рецепты</h1>
 
@@ -171,13 +172,8 @@
                 </div>
             </article>
 
-            <!-- кнопка "Еще" — показывает скрытые рецепты по 2 шт. -->
-            <div style="text-align:center; margin:6px 0 18px 0;">
-                <button id="load-more" class="cta" aria-controls="recipes-list">Еще</button>
-            </div>
-
             <!-- Скрытые рецепты (появляются после нажатия "Еще") -->
-            <article class="recipe-card recipe-hidden" id="r-pancakes" role="article">
+            <article class="recipe-card" id="r-pancakes" role="article">
                 <div class="recipe-grid">
                     <div class="info-col">
                         <img class="recipe-thumb" src="https://cdn.lifehacker.ru/wp-content/uploads/2019/03/shutterstock_791630449_1582287162-e1582287202980.jpg" alt="Блинчики" />
@@ -217,7 +213,7 @@
                 </div>
             </article>
 
-            <article class="recipe-card recipe-hidden" id="r-salad" role="article">
+            <article class="recipe-card" id="r-salad" role="article">
                 <div class="recipe-grid">
                     <div class="info-col">
                         <img class="recipe-thumb" src="https://cdn.lifehacker.ru/wp-content/uploads/2018/11/shutterstock_507078310_1576510459-e1576510491720-630x315.jpg" alt="Салат" />
@@ -253,8 +249,9 @@
                     </div>
                 </div>
             </article>
-
         </main>
+
+        <main class="recipe-page" id="content2"></main>
 
         <footer>
             <div>© <strong>Вкусно</strong></div>
@@ -276,71 +273,12 @@ function addWish(form){
     list.prepend(li);
     form.reset();
 }
-
-/* Пакетная загрузка "Еще" с поддержкой большого числа рецептов */
-document.addEventListener('DOMContentLoaded', () => {
-    const BATCH = 2; // сколько показываем за раз — можно изменить
-    const btn = document.getElementById('load-more');
-    if(!btn) return;
-
-    const getHidden = () => Array.from(document.querySelectorAll('.recipe-card.recipe-hidden'));
-
-    const updateButton = () => {
-        const remaining = getHidden().length;
-        if(remaining === 0){
-            btn.style.display = 'none';
-            return;
-        }
-        btn.style.display = ''; // показать кнопку
-        btn.textContent = remaining > BATCH ? `Еще (${remaining})` : `Еще (${remaining})`;
-    };
-
-    const showNext = (n = BATCH) => {
-        const items = getHidden();
-        if(!items.length) return;
-        items.slice(0, n).forEach(el => {
-            // плавно показываем: удаляем класс recipe-hidden
-            el.classList.remove('recipe-hidden');
-            // опционально: скролл к первому показанному элементу
-            // items[0] && items[0].scrollIntoView({behavior:'smooth', block:'start'});
-        });
-        updateButton();
-    };
-
-    btn.addEventListener('click', () => showNext());
-
-    // Инициализация: скрыть кнопку если ничего не скрыто
-    updateButton();
-
-    /* --- Доп. вариант: автоподгрузка при скролле (инфостолбик) ---
-       Раскомментируйте блок ниже, если хотите автоматически
-       подгружать новые рецепты при приближении к кнопке.
-    */
-    /*
-    const observer = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-            if(entry.isIntersecting){
-                showNext(BATCH);
-            }
-        });
-    }, { rootMargin: '200px' });
-
-    observer.observe(btn);
-    */
-
-    /* Рекомендации при очень большом количестве рецептов:
-       - Загружать рецепты порциями с сервера (fetch / API) вместо рендера всех в DOM.
-       - Использовать виртуализацию (windowing) для тысяч элементов.
-       - Ленивые изображения: <img loading="lazy"> уже ускорит загрузку.
-    */
-});
 </script>
 <script type="module">
 import { supabase } from './assets/js/supabase-init.js';
 
 async function loadRecipes(){
-  const container = document.getElementById('content');
-  container.innerHTML = '<h1>Все рецепты</h1>';
+  const container = document.getElementById('content2');
 
   const { data } = await supabase
     .from('recipes')
@@ -365,6 +303,14 @@ async function loadRecipes(){
           <section class="steps">
             <h3>Шаги</h3>
             <ol>${r.steps.map(s => `<li>${s}</li>`).join('')}</ol>
+          </section>
+          <section class="wishes" aria-label="Пожелания">
+            <h3>Пожелания и советы</h3>
+            <form class="wish-form" onsubmit="event.preventDefault(); addWish(this);">
+                <input name="wish" type="text" placeholder="Писать сюда" required/>
+                <button type="submit">Отправить</button>
+            </form>
+            <ul class="wish-list" aria-live="polite"></ul>
           </section>
         </div>
       </div>

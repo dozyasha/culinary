@@ -11,13 +11,14 @@
     <h1 class="admin-title">Админ-панель рецептов</h1>
 
     <!-- Авторизация -->
-    <div class="admin-card">
-        <div id="user-info" style="display:none;">
+    <div class="admin-card-auth">
+        <form id="user-info" style="display:none;">
             <div style="margin-bottom:8px;">
                 Вы вошли как <strong id="user-email"></strong>
             </div>
             <button id="logout" class="admin-btn admin-btn-secondary">Выйти</button>
-        </div>
+            <button class="admin-btn admin-btn-secondary">Назад</button>
+        </form>
 
         <form id="login-form" class="admin-auth">
             <h3>Вход</h3>
@@ -28,41 +29,56 @@
     </div>
 
     <!-- Форма рецептов -->
-    <div class="admin-card">
-        <h3>Создать / редактировать рецепт</h3>
+    <div class="admin-card" id="dataInfo">
+      <h3>Создать / редактировать рецепт</h3>
 
-        <form id="recipe-form" class="admin-form">
-            <input type="hidden" id="recipe-id">
+      <form id="recipe-form" class="admin-form">
+        <input type="hidden" id="recipe-id">
 
-            <label>Название</label>
-            <input id="title" required>
+        <label>Название</label>
+        <input id="title" required>
 
-            <label>Описание</label>
-            <input id="description">
+        <label>Описание</label>
+        <input id="description">
 
-            <label>Время</label>
-            <input id="time">
+        <label>Время</label>
+        <input id="time">
 
-            <label>Ингредиенты (по одному в строке)</label>
-            <textarea id="ingredients" rows="4"></textarea>
+        <label>Ингредиенты (по одному в строке)</label>
+        <textarea id="ingredients" rows="12"></textarea>
 
-            <label>Шаги (по одному в строке)</label>
-            <textarea id="steps" rows="6"></textarea>
+        <label>Шаги (по одному в строке)</label>
+        <textarea id="steps" rows="12"></textarea>
 
-            <label>Картинка</label>
-            <input id="image-file" type="file" accept="image/*">
-
-            <button type="submit" class="admin-btn">Сохранить рецепт</button>
-        </form>
+        <label>Картинка</label>
+        <div class="image-upload">
+          <button type="button" id="select-image-btn" class="admin-btn">Выбрать картинку</button>
+          <input id="image-file" type="file" accept="image/*" style="display:none">
+          <span id="image-file-name" style="margin-left:8px;font-size:90%;color:#555"></span>
+        </div>
+        
+        <script>
+          document.getElementById('select-image-btn').addEventListener('click', () => {
+          document.getElementById('image-file').click();
+          });
+          document.getElementById('image-file').addEventListener('change', (e) => {
+          const f = e.target.files[0];
+          document.getElementById('image-file-name').textContent = f ? f.name : '';
+          });
+        </script>
+        <hr>
+        <div style="display:flex;justify-content:flex-end;margin-top:12px;">
+          <button type="submit" class="admin-btn">Сохранить рецепт</button>
+        </div>
+      </form>
     </div>
 
-    <!-- Список рецептов -->
-    <h2 class="admin-section-title">Список рецептов</h2>
-
-    <div id="recipes-list"></div>
-
+    <div class="admin-card">
+        <!-- Список рецептов -->
+        <h2 class="admin-section-title">Список рецептов</h2>
+        <div id="recipes-list"></div>
+    </div>
 </div>
-
 
 <script type="module">
 import { supabase } from './assets/js/supabase-init.js';
@@ -72,6 +88,7 @@ import { supabase } from './assets/js/supabase-init.js';
 const loginForm = document.getElementById('login-form');
 const userInfo = document.getElementById('user-info');
 const userEmail = document.getElementById('user-email');
+const dataInfo = document.getElementById('dataInfo');
 
 loginForm.addEventListener('submit', async (e) => {
   e.preventDefault();
@@ -87,12 +104,14 @@ supabase.auth.onAuthStateChange((event, session) => {
   if(session){
     loginForm.style.display = 'none';
     userInfo.style.display = '';
+    dataInfo.style.display = '';
     userEmail.textContent = session.user.email;
     loadRecipes();
   } else {
     loginForm.style.display = '';
     userInfo.style.display = 'none';
     userEmail.textContent = '';
+    dataInfo.style.display = 'none';
     document.getElementById('recipes-list').innerHTML = '';
   }
 });
@@ -106,7 +125,7 @@ async function loadRecipes(){
   const { data, error } = await supabase
     .from('recipes')
     .select('*')
-    .order('created_at', { ascending: false });
+    .order('created_at', { ascending: true });
 
   if(error){
     container.innerHTML = error.message;
@@ -119,12 +138,15 @@ async function loadRecipes(){
     div.style.border = "1px solid #ddd";
     div.style.marginBottom = "10px";
     div.style.padding = "10px";
+    div.style.borderRadius = "8px";
+    div.style.background = "#fafafa";
     div.innerHTML = `
-      <strong>${rec.title}</strong> (${rec.time || ''})
-      <div>
-        <button data-id="${rec.id}" class="edit">Редактировать</button>
-        <button data-id="${rec.id}" class="delete">Удалить</button>
+      <div class="recep-title">
+        <span class="recep-title-name">${rec.title}</span>
+        <button data-id="${rec.id}" class="edit"><i class="fa-regular fa-pen-to-square"></i></button>
+        <button data-id="${rec.id}" class="delete"><i class="fa-regular fa-trash-can"></i></button>
       </div>
+      <div>${rec.description || ''}</div>
     `;
     container.appendChild(div);
   });
@@ -174,29 +196,68 @@ document.getElementById('recipe-form').addEventListener('submit', async (e) => {
 
   let image_url = null;
 
-  if(file){
-    const filePath = `recipe_${Date.now()}_${file.name}`;
-    const { data: upload } = await supabase.storage
+    /* -------- 1. Загрузка изображения в Storage -------- */
+  if (file) {
+    const fileName = `recipe_${Date.now()}_${file.name}`;
+    
+    const { error: uploadError } = await supabase.storage
       .from('images')
-      .upload(filePath, file);
+      .upload(fileName, file);
 
-    image_url = supabase.storage.from('images').getPublicUrl(filePath).data.publicUrl;
+    if (uploadError) {
+      alert("Ошибка загрузки изображения: " + uploadError.message);
+      return;
+    }
+
+    // Сразу получаем публичную ссылку
+    image_url = supabase
+      .storage
+      .from('images')
+      .getPublicUrl(fileName).data.publicUrl;
   }
 
-  const payload = { title, description, time, ingredients, steps };
+  /* -------- 2. Формируем объект для БД -------- */
+  const payload = {
+    title,
+    description,
+    time,
+    ingredients,
+    steps
+  };
 
-  if(image_url) payload.image_url = image_url;
+  if (image_url) {
+    payload.image_url = image_url;
+  }
 
-  if(id){
-    await supabase.from('recipes').update(payload).eq('id', id);
+  /* -------- 3. Вставка или обновление -------- */
+  if (id) {
+    // обновление
+    const { error } = await supabase
+      .from('recipes')
+      .update(payload)
+      .eq('id', id);
+
+    if (error) {
+      alert("Ошибка обновления: " + error.message);
+      return;
+    }
   } else {
-    await supabase.from('recipes').insert(payload);
-  }
+    // вставка
+    const { error } = await supabase
+      .from('recipes')
+      .insert(payload);
+
+    if (error) {
+      alert("Ошибка добавления: " + error.message);
+      return;
+    }
+  }  
 
   e.target.reset();
+  document.getElementById('recipe-id').value = '';
   loadRecipes();
 });
 </script>
-
+<script src="https://kit.fontawesome.com/4eed7af245.js" crossorigin="anonymous"></script>
 </body>
 </html>
