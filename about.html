@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>О компании — Вкусно</title>
+  <link rel="stylesheet" href="assets/css/styles.css" />
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <a class="brand" href="index.html">
+        <div class="logo">ВК</div>
+        <div>
+          <div class="brand-name">Вкусно</div>
+          <div class="brand-sub">Кулинарные рецепты</div>
+        </div>
+      </a>
+
+      <nav aria-label="Главная навигация">
+        <ul>
+          <li><a href="index.html">Главная</a></li>
+          <li><a href="recept.html">Рецепты</a></li>
+          <li><a href="#" aria-current="page">О нас</a></li>
+          <li><a href="about.html#contacts">Контакты</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main style="padding:28px;">
+      <section class="hero-card" style="margin-bottom:18px;">
+        <h1>О компании «Вкусно»</h1>
+        <p class="muted">Мы собираем проверенные домашние рецепты, чтобы готовка была проще и приятнее. Наша цель — вдохновлять и делиться полезными советами.</p>
+      </section>
+
+      <section class="recipe-card">
+        <h2>Наша миссия</h2>
+        <p class="muted">Делать домашнюю кухню доступной: простые инструкции, прозрачные ингредиенты и реальные советы от тех, кто готовит каждый день.</p>
+
+        <h3 style="margin-top:12px">Ценности</h3>
+        <ul>
+          <li>Качество и проверенные рецепты</li>
+          <li>Простота и понятность инструкций</li>
+          <li>Уважение к ингредиентам и сезонности</li>
+        </ul>
+
+        <h3 style="margin-top:12px">Команда</h3>
+        <p class="muted">Небольшая команда редакторов и кулинаров: авторы рецептов, фотографы и тестировщики.</p>
+      </section>
+
+      <section class="recipe-card">
+        <h2 style="margin-top:12px" id="contacts">Контакты</h2>
+        <p class="muted" style="margin-bottom:8px">Напишите нам по электронной почте или через форму ниже.</p>
+
+        <form onsubmit="event.preventDefault(); alert('Спасибо! Мы свяжемся с вами.');" style="display:flex;flex-direction:column;gap:8px;max-width:520px">
+          <input type="text" name="name" placeholder="Имя" required style="padding:10px;border-radius:8px;border:1px solid rgba(0,0,0,0.06)"/>
+          <input type="email" name="email" placeholder="Email" required style="padding:10px;border-radius:8px;border:1px solid rgba(0,0,0,0.06)"/>
+          <textarea name="message" placeholder="Сообщение" rows="4" style="padding:10px;border-radius:8px;border:1px solid rgba(0,0,0,0.06)"></textarea>
+          <button type="submit" class="admin-btn" style="width:140px">Отправить</button>
+        </form>
+      </section>
+    </main>
+
+    <footer>
+      <div>© <strong>Вкусно</strong> — коллекция рецептов</div>
+      <div class="footer-links">
+        <a class="footer-link" href="#">Политика</a>
+        <a class="footer-link" href="#">Контакты</a>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>

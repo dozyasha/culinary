@@ -6,7 +6,7 @@
             --accent:#68b684;
             --glass: rgba(255,255,255,0.6);
             --radius:12px;
-            --max:100%; /* увеличил ширину */
+            --max:100%;
             --gap:20px;
             font-size:16px;
             font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
@@ -19,19 +19,22 @@
             -webkit-font-smoothing:antialiased;
             -moz-osx-font-smoothing:grayscale;
             padding:40px 20px;
-            display:block; /* убрал flex, чтобы страница скроллилась нормально */
+            display:block;
         }
 
         .wrap{
             width:100%;
             max-width:var(--max);
+            min-height: var(--max);
             background:var(--bg);
             border-radius:16px;
             box-shadow:0 8px 30px rgba(20,20,30,0.06);
             overflow:hidden; 
             display:flex;
+            position: relative;
             flex-direction:column;
-            margin:0 auto; /* центрируем контейнер, но с большей шириной он не будет казаться слишком узким */
+            margin:0 auto;
+            z-index: 0;
         }
 
         header{
@@ -68,7 +71,6 @@
             font-weight:700;
             letter-spacing:0.2px;
         }
-        /* Вынесенный субзаголовок в шапке */
         .brand-sub{ font-size:12px; color:var(--muted); }
 
         nav ul{
@@ -152,14 +154,13 @@
         .featured-main{ height:100px; border-radius:20px; }
         .thumb-img{ height:100px; flex:1; border-radius:20px; }
 
-        /* Ограничиваем ширину карточек, чтобы они не разрастались на широких экранах */
         .grid{
             display: grid;
             grid-template-columns: repeat(4, 320px);
             justify-content: center;
             gap: 18px;
             margin: 0 auto;
-            max-width: 1400px; /* calc(320px * 4 + 18px * 3); */
+            max-width: 1400px;
         }
 
         .card{
@@ -195,8 +196,7 @@
         .card-desc{ margin:0; color:var(--muted); font-size:14px; line-height:1.3 }
         .card-meta{ margin-top:auto; display:flex; justify-content:space-between; align-items:center; gap:8px}
         .chip{ background:rgba(100,120,110,0.06); color:var(--muted); padding:6px 8px; border-radius:8px; font-weight:600; font-size:13px }
-        /* Ссылка "Смотреть" в карточках */
-        .card-link{ text-decoration:none; color:var(--accent); font-weight:700; font-size:14px; background-color: #b7e6c445; padding: 5px; border-radius: 5%;}
+        .card-link{ text-decoration:none; color:var(--accent); font-weight:700; font-size:14px; background-color: #b7e6c445; padding: 5px; border-radius: 10%;}
 
         .subscribe{
             background:linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0.4));
@@ -281,310 +281,319 @@
         }
 
         /* Стили для страницы рецептов (recipe-page / recipe-card) */
-.recipe-page h1{ font-size:22px; margin-bottom:8px; }
+        .title-button-back{
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 18px;
+        }
 
-.recipe-card{
-    background:var(--card);
-    border-radius:12px;
-    padding:18px;
-    box-shadow:0 8px 30px rgba(20,20,30,0.04);
-    margin-bottom:18px;
-}
+        .btn-back{
+            text-decoration: none;
+            color: var(--accent);
+            font-weight: 700;
+            font-size: 14px;
+            background-color: #b7e6c445;
+            padding: 5px 10px;
+            border-radius: 10px;
+        }
 
-/* Переконфигурация сетки: используем один поток контента и плавающее изображение,
-   чтобы текст обтекал картинку и не оставлял пустого пространства под ней */
-.recipe-grid{
-    display:block; /* перестроить на потоковый контейнер */
-    gap:18px;
-}
+        .recipe-page h1{ font-size:22px; margin-bottom:8px; }
 
-/* Плавающая картинка внутри .info-col */
-.recipe-thumb{
-    float:left;
-    width:260px;
-    height:auto;
-    margin:0 22px 18px 0;
-    border-radius:10px;
-    object-fit:cover;
-    box-shadow:0 6px 18px rgba(20,20,30,0.04);
-}
+        .recipe-card{
+            background:var(--card);
+            border-radius:12px;
+            padding:18px;
+            box-shadow:0 8px 30px rgba(20,20,30,0.04);
+            margin-bottom:18px;
+        }
 
-/* Сброс обтекания в .info-col */
-.info-col::after{
-    content:"";
-    display:table;
-    clear:both;
-}
+        .recipe-grid{
+            display:block;
+            gap:18px;
+        }
 
-/* На узких экранах делаем изображение блоком (стандартная стопка) */
-@media (max-width:980px){
-    .recipe-thumb{
-        float:none;
-        width:100%;
-        margin:0 0 12px 0;
-    }
-}
+        /* Плавающая картинка внутри .info-col */
+        .recipe-thumb{
+            float:left;
+            width:260px;
+            height:auto;
+            margin:0 22px 18px 0;
+            border-radius:10px;
+            object-fit:cover;
+            box-shadow:0 6px 18px rgba(20,20,30,0.04);
+        }
 
-.media-col img{
-    width:100%;
-    height:260px;
-    object-fit:cover;
-    border-radius:10px;
-    display:block;
-    margin-bottom:12px;
-}
+        /* Сброс обтекания в .info-col */
+        .info-col::after{
+            content:"";
+            display:table;
+            clear:both;
+        }
 
-/* Левая колонка контента */
-.info-col h2{ margin:0 0 6px 0; font-size:20px; }
-.info-col .muted{ color:var(--muted); margin:0 0 12px 0; }
+        /* На узких экранах делаем изображение блоком (стандартная стопка) */
+        @media (max-width:980px){
+            .recipe-thumb{
+                float:none;
+                width:100%;
+                margin:0 0 12px 0;
+            }
+        }
 
-/* Ингредиенты и шаги */
-.ingredients, .steps{
-    background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(250,250,250,0.9));
-    padding:12px;
-    border-radius:10px;
-    margin-bottom:12px;
-}
-.ingredients h3, .steps h3, .wishes h3, .comments h3{ margin:0 0 8px 0; font-size:16px; }
+        .media-col img{
+            width:100%;
+            height:260px;
+            object-fit:cover;
+            border-radius:10px;
+            display:block;
+            margin-bottom:12px;
+        }
 
-/* Пожелания */
-.wish-form{ display:flex; gap:8px; margin-bottom:8px; }
-.wish-form input{ flex:1; padding:8px 10px; border-radius:8px; border:1px solid rgba(0,0,0,0.06); }
-.wish-form button{ padding:8px 12px; border-radius:8px; background:var(--accent); color:#fff; border:0; }
+        /* Левая колонка контента */
+        .info-col h2{ margin:0 0 6px 0; font-size:20px; }
+        .info-col .muted{ color:var(--muted); margin:0 0 12px 0; }
 
-/* Комментарии */
-.comment-list, .wish-list{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:8px; }
-.comment-list li, .wish-list li{ background:rgba(0,0,0,0.02); padding:8px 10px; border-radius:8px; font-size:14px; }
+        /* Ингредиенты и шаги */
+        .ingredients, .steps{
+            background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(250,250,250,0.9));
+            padding:12px;
+            border-radius:10px;
+            margin-bottom:12px;
+        }
+        .ingredients h3, .steps h3, .wishes h3, .comments h3{ margin:0 0 8px 0; font-size:16px; }
 
-.comment-form{ display:flex; flex-direction:column; gap:8px; margin-top:10px; }
-.comment-form input, .comment-form textarea{
-    padding:10px; border-radius:8px; border:1px solid rgba(0,0,0,0.06); font-size:14px;
-}
-.comment-form textarea{ min-height:80px; resize:vertical; }
-.comment-form button{ align-self:flex-end; padding:8px 12px; border-radius:8px; background:var(--accent); color:#fff; border:0; }
+        /* Пожелания */
+        .wish-form{ display:flex; gap:8px; margin-bottom:8px; }
+        .wish-form input{ flex:1; padding:8px 10px; border-radius:8px; border:1px solid rgba(0,0,0,0.06); }
+        .wish-form button{ padding:8px 12px; border-radius:8px; background:var(--accent); color:#fff; border:0; }
 
-/* Небольшие визуальные правки для согласованности */
-.recipe-card .muted{ color:var(--muted); }
-.recipe-card h2{ margin-bottom:6px; }
+        /* Комментарии */
+        .comment-list, .wish-list{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:8px; }
+        .comment-list li, .wish-list li{ background:rgba(0,0,0,0.02); padding:8px 10px; border-radius:8px; font-size:14px; }
 
-/* Стили кнопки "Еще" (вариация .cta) */
-#load-more{
-    cursor:pointer;
-    font-weight:700;
-    padding:10px 18px;
-    border-radius:10px;
-    border:0;
-    background:var(--accent);
-    color:#fff;
-    box-shadow:0 8px 18px rgba(104,183,132,0.18);
-}
+        .comment-form{ display:flex; flex-direction:column; gap:8px; margin-top:10px; }
+        .comment-form input, .comment-form textarea{
+            padding:10px; border-radius:8px; border:1px solid rgba(0,0,0,0.06); font-size:14px;
+        }
+        .comment-form textarea{ min-height:80px; resize:vertical; }
+        .comment-form button{ align-self:flex-end; padding:8px 12px; border-radius:8px; background:var(--accent); color:#fff; border:0; }
 
-/* Немного отступа для появляющихся карточек */
-.recipe-card{ transition:opacity .22s ease, transform .22s ease; }
-.recipe-card:not(.recipe-hidden){ opacity:1; transform:translateY(0); }
-.recipe-card.recipe-hidden{ opacity:0; transform:translateY(6px); }
+        /* Небольшие визуальные правки для согласованности */
+        .recipe-card .muted{ color:var(--muted); }
+        .recipe-card h2{ margin-bottom:6px; }
 
+        /* ===============================
+        ADMIN PANEL (ВКУСНО)
+        =============================== */
 
-/* ===============================
-   ADMIN PANEL (ВКУСНО)
-   =============================== */
+        /* Контейнер */
+        .admin-container {
+            max-width: 860px;
+            margin: 0 auto;
+            padding: 20px;
+            font-family: var(--font, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif);
+        }
 
-/* Контейнер */
-.admin-container {
-    max-width: 860px;
-    margin: 0 auto;
-    padding: 20px;
-    font-family: var(--font, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif);
-}
+        /* Заголовок */
+        .admin-title {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 18px;
+            letter-spacing: -0.5px;
+        }
 
-/* Заголовок */
-.admin-title {
-    font-size: 32px;
-    font-weight: 700;
-    margin-bottom: 18px;
-    letter-spacing: -0.5px;
-}
+        /* Блоки-карточки */
+        .admin-card {
+            background: #fff;
+            border-radius: 14px;
+            padding: 22px;
+            margin-bottom: 22px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+            border: 1px solid #ececec;
+        }
 
-/* Блоки-карточки */
-.admin-card {
-    background: #fff;
-    border-radius: 14px;
-    padding: 22px;
-    margin-bottom: 22px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.06);
-    border: 1px solid #ececec;
-}
+        .admin-card-auth {
+            height: 40vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #fff;
+            border-radius: 14px;
+            padding: 22px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+            border: 1px solid #ececec;
+            width: 320px;
+            margin: 0 auto 22px auto;
+        }
 
-.admin-card-auth {
-    height: 40vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #fff;
-    border-radius: 14px;
-    padding: 22px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.06);
-    border: 1px solid #ececec;
-    width: 320px;
-    margin: 0 auto 22px auto;
-}
+        #email, #password {
+            border: #333 1px solid;
+            border-radius: 12px;
+            padding: 12px 12px;
+            width: 90%;
+            margin-bottom: 14px;
+            font-size: 14px;
+            transition: 0.2s;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
 
-#email, #password {
-    border: #333 1px solid;
-    border-radius: 12px;
-    padding: 12px 12px;
-    width: 90%;
-    margin-bottom: 14px;
-    font-size: 14px;
-    transition: 0.2s;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
+        .admin-auth {
+            gap: 12px;
+        }
 
-.admin-auth {
-    gap: 12px;
-}
+        .admin-card h3 {
+            margin-top: 0;
+        }
 
-.admin-card h3 {
-    margin-top: 0;
-}
+        /* Вводы */
+        .admin-form input,
+        .admin-form textarea {
+            display: block;
+            width: 100%;
+            box-sizing: border-box;
+            padding: 12px;
+            border-radius: 10px;
+            background: #fafafa;
+            border: 1px solid #ddd;
+            margin-bottom: 14px;
+            font-size: 15px;
+            transition: 0.2s;
+        }
 
-/* Вводы */
-.admin-form input,
-.admin-form textarea {
-    display: block;
-    width: 100%;
-    box-sizing: border-box;
-    padding: 12px;
-    border-radius: 10px;
-    background: #fafafa;
-    border: 1px solid #ddd;
-    margin-bottom: 14px;
-    font-size: 15px;
-    transition: 0.2s;
-}
+        .admin-form input:focus,
+        .admin-form textarea:focus {
+            border-color: var(--accent, #106b56);
+            background: #fff;
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(255,112,67,0.2);
+        }
 
-.admin-form input:focus,
-.admin-form textarea:focus {
-    border-color: var(--accent, #106b56);
-    background: #fff;
-    outline: none;
-    box-shadow: 0 0 0 2px rgba(255,112,67,0.2);
-}
+        /* Подписи */
+        .admin-form label {
+            font-size: 14px;
+            color: var(--muted, #666);
+            margin-bottom: 4px;
+            display: inline-block;
+        }
 
-/* Подписи */
-.admin-form label {
-    font-size: 14px;
-    color: var(--muted, #666);
-    margin-bottom: 4px;
-    display: inline-block;
-}
+        /* Кнопки */
+        .admin-btn {
+            background: var(--accent, #106b56);
+            border: none;
+            padding: 12px 18px;
+            border-radius: 10px;
+            color: #fff;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.25s;
+        }
 
-/* Кнопки */
-.admin-btn {
-    background: var(--accent, #106b56);
-    border: none;
-    padding: 12px 18px;
-    border-radius: 10px;
-    color: #fff;
-    font-size: 15px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: 0.25s;
-}
+        .admin-btn:hover {
+            background: #106b56;
+        }
 
-.admin-btn:hover {
-    background: #106b56;
-}
+        .admin-btn-secondary {
+            background: #e0e0e0;
+            color: #333;
+        }
 
-.admin-btn-secondary {
-    background: #e0e0e0;
-    color: #333;
-}
+        .admin-btn-secondary:hover {
+            background: #d5d5d5;
+        }
 
-.admin-btn-secondary:hover {
-    background: #d5d5d5;
-}
+        /* Авторизация */
 
-/* Авторизация */
+        #user-info {
+            background: #fff;
+            border-radius: 12px;
+            padding: 15px;
+            border: 1px solid #eee;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+            margin-bottom: 20px;
+        }
 
-#user-info {
-    background: #fff;
-    border-radius: 12px;
-    padding: 15px;
-    border: 1px solid #eee;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.05);
-    margin-bottom: 20px;
-}
+        /* Список рецептов */
+        .admin-list-item {
+            border: 1px solid #eee;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
+            background: #fff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-/* Список рецептов */
-.admin-list-item {
-    border: 1px solid #eee;
-    border-radius: 12px;
-    padding: 16px;
-    margin-bottom: 12px;
-    background: #fff;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
+        .admin-list-item strong {
+            font-size: 16px;
+        }
 
-.admin-list-item strong {
-    font-size: 16px;
-}
+        .admin-actions button {
+            margin-left: 8px;
+        }
 
-.admin-actions button {
-    margin-left: 8px;
-}
+        /* Группировка действий */
+        .admin-actions button {
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 14px;
+        }
 
-/* Группировка действий */
-.admin-actions button {
-    padding: 8px 12px;
-    border-radius: 8px;
-    font-size: 14px;
-}
+        /* Layout spacing */
+        .admin-section-title {
+            font-size: 26px;
+            margin-bottom: 10px;
+            margin-top: 30px;
+        }
 
-/* Layout spacing */
-.admin-section-title {
-    font-size: 26px;
-    margin-bottom: 10px;
-    margin-top: 30px;
-}
+        .recipes-list {
+            margin-top: 10px;
+        }
 
-.recipes-list {
-    margin-top: 10px;
-}
+        .edit,.delete {
+            display: flex;
+            background: var(--accent, #0a6d88);
+            border: none;
+            margin: 10px 5px 10px 0;
+            padding: 10px;
+            border-radius: 10px;
+            color: #fff;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.25s;
+        }
 
-.edit,.delete {
-    display: flex;
-    background: var(--accent, #0a6d88);
-    border: none;
-    margin: 10px 5px 10px 0;
-    padding: 10px;
-    border-radius: 10px;
-    color: #fff;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: 0.25s;
-}
+        .edit:hover,.delete:hover {
+            background: #106b56;
+        }
 
-.edit:hover,.delete:hover {
-    background: #106b56;
-}
+        .recep-title {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
 
-.recep-title {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
+        .recep-title-name {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            flex: 1;
+        }
 
-.recep-title-name {
-    font-size: 20px;
-    font-weight: 700;
-    margin-bottom: 10px;
-    flex: 1;
-}
+        .image-upload {
+            margin: 5px 0 14px 0;
+        }
 
-.image-upload {
-    margin: 5px 0 14px 0;
-}
+        .loading-message{
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            padding:36px 16px;
+            color:var(--muted);
+            font-weight:600;
+            font-size:15px;
+            background: transparent;
+            border-radius:8px;
+        }

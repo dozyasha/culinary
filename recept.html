@@ -20,238 +20,19 @@
                 <ul>
                     <li><a href="index.html">Главная</a></li>
                     <li><a href="#" aria-current="page">Рецепты</a></li>
-                    <li><a href="#">О нас</a></li>
-                    <li><a href="#">Контакты</a></li>
+                    <li><a href="about.html">О нас</a></li>
+                    <li><a href="about.html#contacts">Контакты</a></li>
                 </ul>
             </nav>
         </header>
 
-        
-        <main class="recipe-page" id="content">
-            <h1 style="margin:0 0 14px 0">Все рецепты</h1>
-
-            <!-- Рецепт: паста -->
-            <article class="recipe-card" id="r-pasta" role="article">
-                <div class="recipe-grid">
-                    <div class="info-col">
-                        <img class="recipe-thumb" src="https://lifehacker.ru/wp-content/uploads/2020/01/shutterstock_1315335506-1_1589978896.jpg" alt="Паста" />
-                        <h2>Ароматная паста с томатным соусом</h2>
-                        <p class="muted">Простой, но насыщенный вкус — идеально для семейного ужина. Время: ~30 мин • Порции: 3–4</p>
-
-                        <section class="ingredients" aria-label="Ингредиенты">
-                            <h3>Ингредиенты (расчитано на 3–4 порции)</h3>
-                            <ul>
-                                <li>Паста (спагетти или лингвини) — 300 г</li>
-                                <li>Оливковое масло — 2 ст. л.</li>
-                                <li>Чеснок — 2 зубчика (тонко нарезать)</li>
-                                <li>Лук-шалот или репчатый лук — 1 шт. (мелко нарезать)</li>
-                                <li>Помидоры (свежие) — 4 шт. (нарезать) или консервированные томаты — 400 г</li>
-                                <li>Томатная паста — 1 ст. л. (по желанию для глубины вкуса)</li>
-                                <li>Сахар — 1/2 ч. л. (если помидоры кислые)</li>
-                                <li>Соль, свежемолотый чёрный перец — по вкусу</li>
-                                <li>Свежее базиликовое лист- (несколько веточек) — для подачи</li>
-                                <li>Пармигiano или Пармезан — по вкусу для подачи</li>
-                                <li>Красный перец хлопьями — щепотка (опция)</li>
-                            </ul>
-                            <div style="font-size:13px;color:var(--muted);margin-top:6px;">
-                                Подготовка: нарезать чеснок и лук, если используете свежие помидоры — ошпарьте и снимите кожицу для более гладкого соуса.
-                            </div>
-                        </section>
-
-                        <section class="steps" aria-label="Шаги приготовления">
-                            <h3>Подробные шаги</h3>
-                            <ol>
-                                <li>
-                                    Подготовка воды и пасты
-                                    <ol>
-                                        <li>В большую кастрюлю налить воду, довести до сильного кипения, хорошо посолить (примерно 1 ст. л. на 3–4 л воды).</li>
-                                        <li>Добавить пасту и варить до состояния al dente согласно инструкции на упаковке (обычно 8–10 мин), сохранив 1/2 стакана воды от варки.</li>
-                                    </ol>
-                                </li>
-                                <li>
-                                    Приготовление соуса
-                                    <ol>
-                                        <li>В сковороде на среднем огне разогреть оливковое масло. Добавить лук, обжаривать 3–4 минуты до прозрачности.</li>
-                                        <li>Добавить чеснок, обжаривать 30–45 сек до появления аромата (не поджигать).</li>
-                                        <li>Добавить помидоры (или консервированные томаты) и томатную пасту, довести до лёгкого кипения. Уменьшить огонь и тушить 8–12 минут, помешивая.</li>
-                                        <li>При необходимости добавить щепотку сахара, посолить, поперчить. Соус должен слегка загустеть.</li>
-                                    </ol>
-                                </li>
-                                <li>
-                                    Сборка блюда и подача
-                                    <ol>
-                                        <li>Переложить готовую пасту в сковороду с соусом (или смешать в большой миске). Если соус густой — добавить немного воды от варки пасты, чтобы достичь желаемой консистенции.</li>
-                                        <li>Прогреть вместе 1–2 минуты, добавить порубленный базилик и выключить огонь.</li>
-                                        <li>Разложить по тарелкам, посыпать тёртым сыром и, при желании, хлопьями острого перца.</li>
-                                    </ol>
-                                </li>
-                                <li style="margin-top:8px;font-size:13px;color:var(--muted);">
-                                    Советы: используйте качественное оливковое масло и не переваривайте пасту — текстура al dente делает блюдо лучше.
-                                </li>
-                            </ol>
-                        </section>
-
-                        <section class="wishes" aria-label="Пожелания">
-                            <h3>Пожелания и советы</h3>
-                            <form class="wish-form" onsubmit="event.preventDefault(); addWish(this);">
-                                <input name="wish" type="text" placeholder="Ваш совет или пожелание" required/>
-                                <button type="submit">Отправить</button>
-                            </form>
-                            <ul class="wish-list" aria-live="polite"></ul>
-                        </section>
-                    </div>
-                </div>
-            </article>
-
-            <!-- Рецепт: суп -->
-            <article class="recipe-card" id="r-soup" role="article">
-                <div class="recipe-grid">
-                    <div class="info-col">
-                        <img class="recipe-thumb" src="https://art-lunch.ru/content/uploads/2014/02/chicken-soup-000.jpg" alt="Суп" />
-                        <h2>Нежный куриный суп</h2>
-                        <p class="muted">Простой семейный бульон с вермишелью. Время: ~60–80 мин • Порции: 4–5</p>
-
-                        <section class="ingredients" aria-label="Ингредиенты">
-                            <h3>Ингредиенты</h3>
-                            <ul>
-                                <li>Курица (цыплёнок или бедра на кости) — 700–900 г</li>
-                                <li>Вода — 2,5–3 л</li>
-                                <li>Морковь — 1 шт. (нарезать кружочками)</li>
-                                <li>Лук — 1 шт. (целый для бульона или полукольцами для подачи)</li>
-                                <li>Сельдерей стеблевой — 1 стебель (по желанию)</li>
-                                <li>Вермишель или мелкие макароны — 100–150 г</li>
-                                <li>Лавровый лист — 1 шт., чёрный перец горошком — 5–6 шт.</li>
-                                <li>Соль, свежая зелень (петрушка) — по вкусу</li>
-                            </ul>
-                            <div style="font-size:13px;color:var(--muted);margin-top:6px;">
-                                Подготовка: промыть курицу, очистить овощи. Для более прозрачного бульона можно снять пену в начале варки.
-                            </div>
-                        </section>
-
-                        <section class="steps" aria-label="Шаги приготовления">
-                            <h3>Подробные шаги</h3>
-                            <ol>
-                                <li>
-                                    Варка бульона
-                                    <ol>
-                                        <li>Положите курицу в большую кастрюлю, залейте холодной водой, доведите до кипения на сильном огне.</li>
-                                        <li>Снимайте пену шумовкой, уменьшите огонь до среднего и положите лавровый лист и перец горошком.</li>
-                                        <li>Варите бульон 35–45 минут до мягкости мяса (время зависит от кусков курицы).</li>
-                                    </ol>
-                                </li>
-                                <li>
-                                    Добавление овощей и вермишели
-                                    <ol>
-                                        <li>Выньте курицу, отделите мясо от костей и верните мясо в кастрюлю.</li>
-                                        <li>Добавьте морковь, лук и сельдерей; варите 10–15 минут до мягкости овощей.</li>
-                                        <li>Добавьте вермишель за 6–8 минут до готовности, чтобы она не разварилась.</li>
-                                    </ol>
-                                </li>
-                                <li>
-                                    Завершение и подача
-                                    <ol>
-                                        <li>Попробуйте бульон на соль и перец, при необходимости отрегулируйте.</li>
-                                        <li>Подавайте с мелко нарезанной петрушкой и ломтиком лимона по желанию.</li>
-                                    </ol>
-                                </li>
-                                <li style="margin-top:8px;font-size:13px;color:var(--muted);">
-                                    Совет: для более насыщенного вкуса можно обжарить овощи на сливочном масле перед добавлением в бульон.
-                                </li>
-                            </ol>
-                        </section>
-
-                        <section class="wishes" aria-label="Пожелания">
-                            <h3>Пожелания и советы</h3>
-                            <form class="wish-form" onsubmit="event.preventDefault(); addWish(this);">
-                                <input name="wish" type="text" placeholder="Совет по супу" required/>
-                                <button type="submit">Отправить</button>
-                            </form>
-                            <ul class="wish-list" aria-live="polite"></ul>
-                        </section>
-                    </div>
-                </div>
-            </article>
-
-            <!-- Скрытые рецепты (появляются после нажатия "Еще") -->
-            <article class="recipe-card" id="r-pancakes" role="article">
-                <div class="recipe-grid">
-                    <div class="info-col">
-                        <img class="recipe-thumb" src="https://cdn.lifehacker.ru/wp-content/uploads/2019/03/shutterstock_791630449_1582287162-e1582287202980.jpg" alt="Блинчики" />
-                        <h2>Пышные блинчики на завтрак</h2>
-                        <p class="muted">Простое тесто, хрустящая корочка, нежная внутренняя текстура. Время: ~20 мин • Порции: 4</p>
-
-                        <section class="ingredients" aria-label="Ингредиенты">
-                            <h3>Ингредиенты</h3>
-                            <ul>
-                                <li>Мука — 200 г</li>
-                                <li>Молоко — 300 мл</li>
-                                <li>Яйца — 2 шт.</li>
-                                <li>Сахар — 1 ст. л.</li>
-                                <li>Разрыхлитель — 1 ч. л.</li>
-                                <li>Щепотка соли, масло для жарки</li>
-                            </ul>
-                        </section>
-
-                        <section class="steps" aria-label="Шаги приготовления">
-                            <h3>Подробные шаги</h3>
-                            <ol>
-                                <li>Смешать сухие ингредиенты.</li>
-                                <li>Взбить яйца с молоком, соединить с мукой до однородности.</li>
-                                <li>Жарить на разогретой сковороде до золотистого цвета по 1–2 минуты с каждой стороны.</li>
-                            </ol>
-                        </section>
-
-                        <section class="wishes" aria-label="Пожелания">
-                            <h3>Пожелания и советы</h3>
-                            <form class="wish-form" onsubmit="event.preventDefault(); addWish(this);">
-                                <input name="wish" type="text" placeholder="Совет по блинчикам" required/>
-                                <button type="submit">Отправить</button>
-                            </form>
-                            <ul class="wish-list" aria-live="polite"></ul>
-                        </section>
-                    </div>
-                </div>
-            </article>
-
-            <article class="recipe-card" id="r-salad" role="article">
-                <div class="recipe-grid">
-                    <div class="info-col">
-                        <img class="recipe-thumb" src="https://cdn.lifehacker.ru/wp-content/uploads/2018/11/shutterstock_507078310_1576510459-e1576510491720-630x315.jpg" alt="Салат" />
-                        <h2>Свежий салат с авокадо</h2>
-                        <p class="muted">Быстро и полезно: зелень, авокадо, цитрусовая заправка. Время: ~15 мин • Порции: 2–3</p>
-
-                        <section class="ingredients" aria-label="Ингредиенты">
-                            <h3>Ингредиенты</h3>
-                            <ul>
-                                <li>Салатные листья — 150 г</li>
-                                <li>Авокадо — 1 шт.</li>
-                                <li>Помидоры черри — 8 шт.</li>
-                                <li>Оливковое масло, лимонный сок, соль, перец</li>
-                            </ul>
-                        </section>
-
-                        <section class="steps" aria-label="Шаги приготовления">
-                            <h3>Подробные шаги</h3>
-                            <ol>
-                                <li>Нарезать овощи и авокадо.</li>
-                                <li>Смешать заправку и заправить салат перед подачей.</li>
-                            </ol>
-                        </section>
-
-                        <section class="wishes" aria-label="Пожелания">
-                            <h3>Пожелания и советы</h3>
-                            <form class="wish-form" onsubmit="event.preventDefault(); addWish(this);">
-                                <input name="wish" type="text" placeholder="Совет по салату" required/>
-                                <button type="submit">Отправить</button>
-                            </form>
-                            <ul class="wish-list" aria-live="polite"></ul>
-                        </section>
-                    </div>
-                </div>
-            </article>
+        <main class="recipe-page" id="content2">
+            <div class="title-button-back">
+                <h1 class="section-title">Подробнее о рецептах</h1>
+                <a class="btn-back" href="index.html">&larr; Назад на главную</a>
+            </div>
+            <!-- Контент с рецептами загружается с помощью JavaScript -->   
         </main>
-
-        <main class="recipe-page" id="content2"></main>
 
         <footer>
             <div>© <strong>Вкусно</strong></div>
@@ -263,7 +44,6 @@
     </div>
 
 <script>
-/* Обработка формы пожеланий — добавляет запись в локальный список */
 function addWish(form){
     const list = form.closest('.wishes').querySelector('.wish-list');
     const val = form.wish.value.trim();
@@ -277,49 +57,97 @@ function addWish(form){
 <script type="module">
 import { supabase } from './assets/js/supabase-init.js';
 
-async function loadRecipes(){
-  const container = document.getElementById('content2');
-
-  const { data } = await supabase
-    .from('recipes')
-    .select('*')
-    .order('created_at', { ascending: false });
-
-  data.forEach(r => {
-    const el = document.createElement('article');
-    el.className = "recipe-card";
-    el.innerHTML = `
-      <div class="recipe-grid">
-        <div class="info-col">
-          <img class="recipe-thumb" src="${r.image_url || 'assets/images/placeholder.png'}">
-          <h2>${r.title}</h2>
-          <p class="muted">${r.description || ''} ${r.time? '• ' + r.time : ''}</p>
-
-          <section class="ingredients">
-            <h3>Ингредиенты</h3>
-            <ul>${r.ingredients.map(i => `<li>${i}</li>`).join('')}</ul>
-          </section>
-
-          <section class="steps">
-            <h3>Шаги</h3>
-            <ol>${r.steps.map(s => `<li>${s}</li>`).join('')}</ol>
-          </section>
-          <section class="wishes" aria-label="Пожелания">
-            <h3>Пожелания и советы</h3>
-            <form class="wish-form" onsubmit="event.preventDefault(); addWish(this);">
-                <input name="wish" type="text" placeholder="Писать сюда" required/>
-                <button type="submit">Отправить</button>
-            </form>
-            <ul class="wish-list" aria-live="polite"></ul>
-          </section>
-        </div>
-      </div>
-    `;
-    container.appendChild(el);
-  });
+function normalizeList(field){
+  if (!field) return [];
+  if (Array.isArray(field)) return field;
+  return String(field).split(/\r?\n/).map(s => s.trim()).filter(Boolean);
 }
 
-document.addEventListener('DOMContentLoaded', loadRecipes);
+async function renderRecipe(container, r){
+  const ingredients = normalizeList(r.ingredients);
+  const steps = normalizeList(r.steps);
+
+  const el = document.createElement('article');
+  el.className = "recipe-card";
+  el.innerHTML = `
+    <div class="recipe-grid">
+      <div class="info-col">
+        <img class="recipe-thumb" src="${r.image_url || 'assets/images/placeholder.png'}" alt="${r.title}">
+        <h2>${r.title}</h2>
+        <p class="muted">${r.description || ''} ${r.time ? '- ' + r.time : ''}</p>
+
+        <section class="ingredients">
+          <h3>Ингредиенты</h3>
+          <ul>${ingredients.map(i => `<li>${i}</li>`).join('')}</ul>
+        </section>
+
+        <section class="steps">
+          <h3>Шаги</h3>
+          <ol>${steps.map(s => `<li>${s}</li>`).join('')}</ol>
+        </section>
+
+        <section class="wishes" aria-label="Пожелания">
+          <h3>Пожелания и советы</h3>
+          <form class="wish-form" onsubmit="event.preventDefault(); addWish(this);">
+            <input name="wish" type="text" placeholder="Писать сюда" required/>
+            <button type="submit">Отправить</button>
+          </form>
+          <ul class="wish-list" aria-live="polite"></ul>
+        </section>
+      </div>
+    </div>
+  `;
+  container.appendChild(el);
+}
+
+document.addEventListener('DOMContentLoaded', async () => {
+  const container = document.getElementById('content2');
+  if(!container) return;
+
+  // вставляем сообщение загрузки под заголовком
+  const ref = container.querySelector('.title-button-back') || container.firstElementChild;
+  const loading = document.createElement('div');
+  loading.className = 'loading-message';
+  loading.textContent = 'Загрузка...';
+  if(ref && ref.parentNode === container) container.insertBefore(loading, ref.nextSibling);
+  else container.prepend(loading);
+
+  const params = new URLSearchParams(location.search);
+  const id = params.get('id');
+
+  try {
+    if(id){
+      const { data, error } = await supabase
+        .from('recipes')
+        .select('*')
+        .eq('id', id)
+        .single();
+
+      loading.remove();
+      if(error || !data){
+        container.insertAdjacentHTML('beforeend', '<p>Рецепт не найден.</p>');
+        return;
+      }
+      renderRecipe(container, data);
+      return;
+    }
+
+    const { data, error } = await supabase
+      .from('recipes')
+      .select('*')
+      .order('created_at', { ascending: false });
+
+    loading.remove();
+    if(error || !data) {
+      container.insertAdjacentHTML('beforeend', '<p>Не удалось загрузить рецепты.</p>');
+      return;
+    }
+    data.forEach(r => renderRecipe(container, r));
+  } catch (e) {
+    loading.textContent = 'Ошибка загрузки.';
+    console.error(e);
+  }
+});
 </script>
 </body>
 </html>
